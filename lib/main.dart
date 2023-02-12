@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:login_app/main_page.dart';
 import 'login.dart';
+import 'main_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 Future main() async{
@@ -16,7 +18,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Login(),
+      home: MainPage(),
     );
   }
 }
