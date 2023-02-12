@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "388805720769",
+    "project_id": "loginplant",
+    "storage_bucket": "loginplant.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:388805720769:android:b3921157f2c2d4bb803240",
+        "android_client_info": {
+          "package_name": "com.example.login_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "388805720769-7p49vu9dsb78idm9235d1o11h7kub77u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCF9U0WD7SCbJdfROudVkLs-Kwd5QEDbVE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "388805720769-7p49vu9dsb78idm9235d1o11h7kub77u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

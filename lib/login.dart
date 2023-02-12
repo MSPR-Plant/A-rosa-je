@@ -158,7 +158,7 @@ class _LoginState extends State<Login> {
                         blurRadius: 2,
                         offset: Offset(2,2),
                       ),
-                    ] 
+                      ]
                       ),
                     child: 
                     Icon(Icons.facebook,
