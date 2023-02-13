@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Register extends StatefulWidget {
@@ -13,18 +14,33 @@ class _RegisterState extends State<Register> {
   //controllers
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
 
   //disposing of the textfield for memory
   @override
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
+    _confirmPasswordController.dispose();
     super.dispose(); 
   }
 
   //Sign up method
   Future signUp() async{
+    if (passwordIsConfirmed()) {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      email: _emailController.text.trim(), 
+      password: _passwordController.text.trim()
+      );
+    } 
+  }
 
+  bool passwordIsConfirmed() {
+    if (_passwordController.text.trim() == _confirmPasswordController.text.trim()) {
+      return true;
+    }else {
+      return false;
+    }
   }
 
 
@@ -48,7 +64,7 @@ class _RegisterState extends State<Register> {
                     fontSize: 48,
                   ),),
             
-                  SizedBox(height: 60),
+                  SizedBox(height: 40),
                   //Logo
                   Text('Register to have your Account',
                   style: TextStyle(
@@ -58,7 +74,7 @@ class _RegisterState extends State<Register> {
                   ),
                   ),
             
-                  SizedBox(height: 60),
+                  SizedBox(height: 30),
                   //Email
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 32.0),
@@ -90,7 +106,7 @@ class _RegisterState extends State<Register> {
                     ),
                   ),
                     
-                  SizedBox(height: 30),
+                  SizedBox(height: 20),
                   //Password
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 32.0),
@@ -115,6 +131,39 @@ class _RegisterState extends State<Register> {
                           obscureText: true,
                           decoration: InputDecoration(
                             hintText: 'Password',
+                            border: InputBorder.none,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                    
+                  SizedBox(height: 20),
+
+                  //Confirm Password
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 32.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border.all(color: Colors.black),
+                        borderRadius: BorderRadius.circular(8),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color.fromARGB(255, 124, 124, 124),
+                            spreadRadius: 2,
+                            blurRadius: 2,
+                            offset: Offset(2,2),
+                          ),
+                        ] 
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 20.0),
+                        child: TextField(
+                          controller: _confirmPasswordController,
+                          obscureText: true,
+                          decoration: InputDecoration(
+                            hintText: 'Confirm Password',
                             border: InputBorder.none,
                           ),
                         ),
@@ -166,7 +215,7 @@ class _RegisterState extends State<Register> {
                   ),
                   ),
             
-                  SizedBox(height: 45),
+                  SizedBox(height: 20),
                   //Icons
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,

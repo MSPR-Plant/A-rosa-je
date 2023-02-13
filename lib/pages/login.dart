@@ -169,7 +169,7 @@ class _LoginState extends State<Login> {
                 ),
                 ),
           
-                SizedBox(height: 45),
+                SizedBox(height: 20),
                 //Icons
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
