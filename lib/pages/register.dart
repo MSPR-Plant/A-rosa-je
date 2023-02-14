@@ -27,11 +27,25 @@ class _RegisterState extends State<Register> {
 
   //Sign up method
   Future signUp() async{
-    if (passwordIsConfirmed()) {
+    
+    try {
+      if (passwordIsConfirmed()) {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
       email: _emailController.text.trim(), 
       password: _passwordController.text.trim()
       );
+      showDialog(context: context, builder: (context){
+        return AlertDialog(
+          content: Text('Congratulation ! Your account was created.'),
+        );
+      });
+    }
+    } on FirebaseAuthException catch (e) {
+      showDialog(context: context, builder: (context){
+        return AlertDialog(
+          content: Text(e.message.toString()),
+        );
+      });
     } 
   }
 
@@ -62,6 +76,7 @@ class _RegisterState extends State<Register> {
                     //GoogleFonts.bebasNeue(fontSize:52)
                     fontWeight: FontWeight.bold,
                     fontSize: 48,
+                    color: Colors.green,
                   ),),
             
                   SizedBox(height: 40),
@@ -180,7 +195,7 @@ class _RegisterState extends State<Register> {
                       child: Container(
                         padding: EdgeInsets.all(20),
                         decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 8, 17, 8),
+                          color: Colors.green,
                           borderRadius: BorderRadius.circular(12),
                           boxShadow: [
                             BoxShadow(

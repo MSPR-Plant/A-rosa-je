@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'forgot_password.dart';
 
 class Login extends StatefulWidget {
   final VoidCallback showRegisterPage;
@@ -17,10 +18,20 @@ class _LoginState extends State<Login> {
 
   //sign in method
   Future signIn() async{
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
       email: _emailController.text.trim(), 
       password: _passwordController.text.trim(),
       );
+      
+    } on FirebaseAuthException catch (e) {
+      print(e);
+      showDialog(context: context, builder: (context){
+        return AlertDialog(
+          content: Text(e.message.toString()),
+        );
+      });
+    }
   }
 
   //disposing of the textfield for memory
@@ -49,6 +60,7 @@ class _LoginState extends State<Login> {
                   //GoogleFonts.bebasNeue(fontSize:52)
                   fontWeight: FontWeight.bold,
                   fontSize: 48,
+                  color: Colors.green,
                 ),),
           
                  SizedBox(height: 60),
@@ -124,8 +136,34 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                 ),
+
+                SizedBox(height: 10),
+                //Forgot Password 
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 34.0),
+                  child: Row(
+                    children: [
+                      GestureDetector(
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context){
+                            return ForgotPassword();
+                          }
+                          )
+                          );
+                        },
+                        child: Text(
+                          'Forgot Password ?',
+                          style: TextStyle(
+                            color: Colors.blue,
+                            fontWeight: FontWeight.bold
+                          ),
+                          ),
+                      ),
+                    ],
+                  ),
+                ),
                   
-                SizedBox(height: 45),
+                SizedBox(height: 35),
                 //Button
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 32.0),
@@ -134,7 +172,7 @@ class _LoginState extends State<Login> {
                     child: Container(
                       padding: EdgeInsets.all(20),
                       decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 8, 17, 8),
+                        color: Colors.green,
                         borderRadius: BorderRadius.circular(12),
                         boxShadow: [
                           BoxShadow(
