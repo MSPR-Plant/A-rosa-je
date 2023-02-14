@@ -55,7 +55,10 @@ class _ForgotPasswordState extends State<ForgotPassword> {
               padding: const EdgeInsets.symmetric(horizontal: 32.0),
               child: Text("Enter Your Email and you'll receive a password reseting process",
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 20),
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold
+                ),
               ),
             ),
 
@@ -67,14 +70,14 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                   child: Container(
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      border: Border.all(color: Colors.black),
+                      border: Border.all(color: Colors.grey),
                       borderRadius: BorderRadius.circular(8),
                       boxShadow: [
                         BoxShadow(
-                          color: Color.fromARGB(255, 124, 124, 124),
-                          spreadRadius: 2,
-                          blurRadius: 2,
-                          offset: Offset(2,2),
+                          color: Color.fromARGB(255, 185, 185, 185),
+                          spreadRadius: 1,
+                          blurRadius: 1,
+                          offset: Offset(1,1),
                         ),
                       ] 
                       

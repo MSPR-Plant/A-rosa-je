@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Register extends StatefulWidget {
   final VoidCallback showLoginPage;
@@ -96,14 +97,14 @@ class _RegisterState extends State<Register> {
                     child: Container(
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        border: Border.all(color: Colors.black),
+                        border: Border.all(color: Colors.grey),
                         borderRadius: BorderRadius.circular(8),
                         boxShadow: [
                           BoxShadow(
-                            color: Color.fromARGB(255, 124, 124, 124),
-                            spreadRadius: 2,
-                            blurRadius: 2,
-                            offset: Offset(2,2),
+                          color: Color.fromARGB(255, 161, 161, 161),
+                          spreadRadius: 1,
+                          blurRadius: 1,
+                          offset: Offset(1,1),
                           ),
                         ] 
                         
@@ -128,14 +129,14 @@ class _RegisterState extends State<Register> {
                     child: Container(
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        border: Border.all(color: Colors.black),
+                        border: Border.all(color: Colors.grey),
                         borderRadius: BorderRadius.circular(8),
                         boxShadow: [
                           BoxShadow(
-                            color: Color.fromARGB(255, 124, 124, 124),
-                            spreadRadius: 2,
-                            blurRadius: 2,
-                            offset: Offset(2,2),
+                          color: Color.fromARGB(255, 161, 161, 161),
+                          spreadRadius: 1,
+                          blurRadius: 1,
+                          offset: Offset(1,1),
                           ),
                         ] 
                       ),
@@ -161,14 +162,14 @@ class _RegisterState extends State<Register> {
                     child: Container(
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        border: Border.all(color: Colors.black),
+                        border: Border.all(color: Colors.grey),
                         borderRadius: BorderRadius.circular(8),
                         boxShadow: [
                           BoxShadow(
-                            color: Color.fromARGB(255, 124, 124, 124),
-                            spreadRadius: 2,
-                            blurRadius: 2,
-                            offset: Offset(2,2),
+                          color: Color.fromARGB(255, 161, 161, 161),
+                          spreadRadius: 1,
+                          blurRadius: 1,
+                          offset: Offset(1,1),
                           ),
                         ] 
                       ),
@@ -199,10 +200,10 @@ class _RegisterState extends State<Register> {
                           borderRadius: BorderRadius.circular(12),
                           boxShadow: [
                             BoxShadow(
-                              color: Color.fromARGB(255, 124, 124, 124),
-                              spreadRadius: 2,
-                              blurRadius: 2,
-                              offset: Offset(2,2),
+                              color: Color.fromARGB(255, 161, 161, 161),
+                              spreadRadius: 1,
+                              blurRadius: 1,
+                              offset: Offset(1,1),
                             ),
                           ] 
                         ),
@@ -232,75 +233,57 @@ class _RegisterState extends State<Register> {
             
                   SizedBox(height: 20),
                   //Icons
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(8.0),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black),
-                          borderRadius: BorderRadius.circular(8),
-                          color: Colors.white,
-                          boxShadow: [
-                          BoxShadow(
-                            color: Color.fromARGB(255, 124, 124, 124),
-                            spreadRadius: 2,
-                            blurRadius: 2,
-                            offset: Offset(2,2),
-                          ),
-                          ]
-                          ),
-                        child: 
-                        Icon(Icons.facebook,
-                        size: 50,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    
+          
+                    Container(
+                      padding: const EdgeInsets.all(8.0),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(8),
+                        color: Colors.white,
+                        boxShadow: [
+                        BoxShadow(
+                          color: Color.fromARGB(255, 161, 161, 161),
+                          spreadRadius: 1,
+                          blurRadius: 1,
+                          offset: Offset(1,1),
                         ),
-            
-                      SizedBox(width: 45),
-            
-                      Container(
-                        padding: const EdgeInsets.all(8.0),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black),
-                          borderRadius: BorderRadius.circular(8),
-                          color: Colors.white,
-                          boxShadow: [
-                          BoxShadow(
-                            color: Color.fromARGB(255, 124, 124, 124),
-                            spreadRadius: 2,
-                            blurRadius: 2,
-                            offset: Offset(2,2),
-                          ),
-                        ] 
-                          ),
-                        child: 
-                        Icon(Icons.android,
-                        size: 50,),
+                      ] 
                         ),
-            
-                      SizedBox(width: 45),
-            
-                      Container(
-                        padding: const EdgeInsets.all(8.0),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black),
-                          borderRadius: BorderRadius.circular(8),
-                          color: Colors.white,
-                          boxShadow: [
-                          BoxShadow(
-                            color: Color.fromARGB(255, 124, 124, 124),
-                            spreadRadius: 2,
-                            blurRadius: 2,
-                            offset: Offset(2,2),
-                          ),
-                        ] 
-                          ),
-                        child: 
-                        Icon(Icons.phone,
-                        size: 50,
+                      child: 
+                      Icon(FontAwesomeIcons.google,
+                      size: 50,
+                      //color: Colors.red[600],
+                      ),
+                      ),
+          
+                    SizedBox(width: 45),
+          
+                    Container(
+                      padding: const EdgeInsets.all(8.0),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(8),
+                        color: Colors.white,
+                        boxShadow: [
+                        BoxShadow(
+                          color: Color.fromARGB(255, 161, 161, 161),
+                          spreadRadius: 1,
+                          blurRadius: 1,
+                          offset: Offset(1,1),
                         ),
+                      ] 
                         ),
-                    ],
-                  ),
+                      child: 
+                      Icon(FontAwesomeIcons.apple,
+                      size: 50,
+                      ),
+                      ),
+                  ],
+                ),
             
                   //Change page
                   SizedBox(height: 45),
