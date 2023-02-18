@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -16,6 +17,9 @@ class _RegisterState extends State<Register> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
+  final _nameController = TextEditingController();
+  final _phoneController = TextEditingController();
+  final _addressController = TextEditingController();
 
   //disposing of the textfield for memory
   @override
@@ -23,6 +27,9 @@ class _RegisterState extends State<Register> {
     _emailController.dispose();
     _passwordController.dispose();
     _confirmPasswordController.dispose();
+    _nameController.dispose();
+    _phoneController.dispose();
+    _addressController.dispose();
     super.dispose(); 
   }
 
@@ -31,10 +38,22 @@ class _RegisterState extends State<Register> {
     
     try {
       if (passwordIsConfirmed()) {
+        //create the user
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
       email: _emailController.text.trim(), 
       password: _passwordController.text.trim()
       );
+
+      //detail of users
+      addUserDetails(
+        _nameController.text.trim(),
+        _emailController.text.trim(),
+        _addressController.text.trim(),
+        int.parse(_phoneController.text.trim()),
+      );
+
+
+
       showDialog(context: context, builder: (context){
         return AlertDialog(
           content: Text('Congratulation ! Your account was created.'),
@@ -48,6 +67,16 @@ class _RegisterState extends State<Register> {
         );
       });
     } 
+  }
+
+  //Detail of user
+  Future addUserDetails(String Name, String Email, String Address, int Phone) async{
+    await FirebaseFirestore.instance.collection('users').add( {
+      'name': Name,
+      'email': Email,
+      'address': Address,
+      'phone': Phone,
+    });
   }
 
   bool passwordIsConfirmed() {
@@ -71,26 +100,49 @@ class _RegisterState extends State<Register> {
             
                   children: [
                   
-                  //Logo
-                  Text('KnowYourPlant',
-                  style: TextStyle(
-                    //GoogleFonts.bebasNeue(fontSize:52)
-                    fontWeight: FontWeight.bold,
-                    fontSize: 48,
-                    color: Colors.green,
-                  ),),
-            
-                  SizedBox(height: 40),
-                  //Logo
+                  
+                  //Text
                   Text('Register to have your Account',
                   style: TextStyle(
                     color: Color.fromARGB(255, 129, 129, 129),
                     fontWeight: FontWeight.bold,
-                    fontSize: 24,
+                    fontSize: 26,
                   ),
                   ),
             
-                  SizedBox(height: 30),
+                  SizedBox(height: 20),
+                  //Name
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 32.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(8),
+                        boxShadow: [
+                          BoxShadow(
+                          color: Color.fromARGB(255, 161, 161, 161),
+                          spreadRadius: 1,
+                          blurRadius: 1,
+                          offset: Offset(1,1),
+                          ),
+                        ] 
+                        
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 20.0),
+                        child: TextField(
+                          controller: _nameController,
+                          decoration: InputDecoration(
+                            hintText: 'Name',
+                            border: InputBorder.none,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                    
+                  SizedBox(height: 10),
                   //Email
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 32.0),
@@ -122,7 +174,71 @@ class _RegisterState extends State<Register> {
                     ),
                   ),
                     
-                  SizedBox(height: 20),
+                  SizedBox(height: 10),
+                  //Address
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 32.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(8),
+                        boxShadow: [
+                          BoxShadow(
+                          color: Color.fromARGB(255, 161, 161, 161),
+                          spreadRadius: 1,
+                          blurRadius: 1,
+                          offset: Offset(1,1),
+                          ),
+                        ] 
+                        
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 20.0),
+                        child: TextField(
+                          controller: _addressController,
+                          decoration: InputDecoration(
+                            hintText: 'Address',
+                            border: InputBorder.none,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                    
+                  SizedBox(height: 10),
+                  //Phone
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 32.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(8),
+                        boxShadow: [
+                          BoxShadow(
+                          color: Color.fromARGB(255, 161, 161, 161),
+                          spreadRadius: 1,
+                          blurRadius: 1,
+                          offset: Offset(1,1),
+                          ),
+                        ] 
+                        
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 20.0),
+                        child: TextField(
+                          controller: _phoneController,
+                          decoration: InputDecoration(
+                            hintText: 'Phone',
+                            border: InputBorder.none,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                    
+                  SizedBox(height: 10),
                   //Password
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 32.0),
@@ -154,7 +270,7 @@ class _RegisterState extends State<Register> {
                     ),
                   ),
                     
-                  SizedBox(height: 20),
+                  SizedBox(height: 10),
 
                   //Confirm Password
                   Padding(
@@ -187,7 +303,7 @@ class _RegisterState extends State<Register> {
                     ),
                   ),
                     
-                  SizedBox(height: 45),
+                  SizedBox(height: 25),
                   //Button
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 32.0),
@@ -221,7 +337,7 @@ class _RegisterState extends State<Register> {
                     ),
                   ),
             
-                  SizedBox(height: 45),
+                  SizedBox(height: 25),
             
                   Text('Or Sign up with',
                   style: TextStyle(
@@ -231,7 +347,7 @@ class _RegisterState extends State<Register> {
                   ),
                   ),
             
-                  SizedBox(height: 20),
+                  SizedBox(height: 10),
                   //Icons
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
