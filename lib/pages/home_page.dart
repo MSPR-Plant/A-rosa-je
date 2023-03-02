@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -41,7 +42,7 @@ class _HomePageState extends State<HomePage> {
                           width: double.infinity,
                           child: ElevatedButton.icon(
                             onPressed: () {
-                              // Ajouter la fonctionalité d'ajout d'image
+                              // TODO: Ajouter la fonctionalité d'ajout d'image
                             },
                             icon: Icon(Icons.add),
                             label: Text('Upload your Image'),
@@ -54,25 +55,27 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 20),
-                        SizedBox(
-                          height: 80,
-                          width: double.infinity,
-                          child: ElevatedButton.icon(
-                            onPressed: () {
-                              // Ajouter la fonctionalité de prise de photo
-                            },
-                            icon: Icon(Icons.add),
-                            label: Text('Take a photo of your plant'),
-                            style: ElevatedButton.styleFrom(
-                              primary: Colors.green,
-                              elevation: 5,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
+                        if (!kIsWeb) // TODO: Check if app is not running on web
+                          SizedBox(height: 20),
+                        if (!kIsWeb)
+                          SizedBox(
+                            height: 80,
+                            width: double.infinity,
+                            child: ElevatedButton.icon(
+                              onPressed: () {
+                                // TODO: Ajouter la fonctionalité de prise de photo
+                              },
+                              icon: Icon(Icons.add),
+                              label: Text('Take a photo of your plant'),
+                              style: ElevatedButton.styleFrom(
+                                primary: Colors.green,
+                                elevation: 5,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
                               ),
                             ),
                           ),
-                        ),
                       ],
                     ),
                   ),
