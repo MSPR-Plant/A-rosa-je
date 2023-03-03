@@ -56,7 +56,7 @@ class _LoginState extends State<Login> {
                 children: [
                 
                 //Logo
-                Text('KnowYourPlant',
+                Text("A'rosa-je",
                 style: TextStyle(
                   //GoogleFonts.bebasNeue(fontSize:52)
                   fontWeight: FontWeight.bold,
