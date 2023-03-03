@@ -48,6 +48,15 @@ dependencies:
   #Google singin dependencie
   google_sign_in: ^5.4.4
 
+  #Google maps
+  google_maps_flutter: ^2.2.5
+
+  #File picker
+  file_picker: ^5.2.5
+
+  #Image Picker
+  image_picker: ^0.8.6+4
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

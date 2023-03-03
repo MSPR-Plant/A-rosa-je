@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:login_app/auth/auth_page.dart';
 import '../pages/login.dart';
 import '../pages/home_page.dart';
+import '../pages/map.dart';
 
 
 class MainPage extends StatelessWidget {
