@@ -148,7 +148,7 @@ class _HomePageState extends State<HomePage> {
                             child: ElevatedButton.icon(
                               onPressed: () {
                                 // TODO: Ajouter la fonctionalité d'ajout d'image
-                                pickCamera();
+                                pickImage();
                               },
                               icon: Icon(Icons.add),
                               label: Text('Upload your Image'),
@@ -170,7 +170,8 @@ class _HomePageState extends State<HomePage> {
                               child: ElevatedButton.icon(
                                 onPressed: () {
                                   // TODO: Ajouter la fonctionalité de prise de photo
-                                  pickFile();
+                                  
+                                  pickCamera();
                                   
                                 },
                                 icon: Icon(Icons.add),
@@ -209,15 +210,15 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     
-                    if(pickedfile !=null)
+                    /*if(pickedfile !=null)
                       SizedBox(
                         height: 300,
                         width: 300,
                         child: Image.file(fileToDisplay!),
                         
                         
-                      )else(Text("No Image Selected")),
-                      // image != null ? Image.file(image!): const Text("No Image selected"),
+                      )else(Text("No Image Selected")),*/
+                     image != null ? Image.file(image!): const Text("No Image selected"),
                     Positioned(
                       bottom: 16,
                       left: 16,
