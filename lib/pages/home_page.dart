@@ -26,48 +26,46 @@ class _HomePageState extends State<HomePage> {
   //Les files pour la caméra
   File? image;
 
-
   // TODO: Ajoutez les droits de gallery
-  Future pickImage() async{
-    try{
+  Future pickImage() async {
+    try {
       //Appel l'image_picker, pick and image et appel la source
       final image = await ImagePicker().pickImage(source: ImageSource.gallery);
 
       //Si il a réussi a sellectionner une image
-      if(image == null) return;
+      if (image == null) return;
 
       final imageTemp = File(image.path);
 
       setState(() {
         this.image = imageTemp;
       });
-    } on PlatformException catch (e){
+    } on PlatformException catch (e) {
       print(e);
     }
   }
 
-
   // TODO: Ajoutez les droits de camera
-  Future pickCamera() async{
-    try{
+  Future pickCamera() async {
+    try {
       //Appel l'image_picker, pick and image et appel la source
       final image = await ImagePicker().pickImage(source: ImageSource.camera);
 
       //Si il a réussi a sellectionner une image
-      if(image == null) return;
+      if (image == null) return;
 
       final imageTemp = File(image.path);
 
       setState(() {
         this.image = imageTemp;
       });
-    } on PlatformException catch (e){
+    } on PlatformException catch (e) {
       print(e);
     }
   }
 
-  void pickFile() async{
-    try{
+  void pickFile() async {
+    try {
       setState(() {
         isLoadding = true;
       });
@@ -80,7 +78,7 @@ class _HomePageState extends State<HomePage> {
         allowMultiple: false,
       );
 
-      if(result != null){
+      if (result != null) {
         _fileName = result!.files.first.name;
         pickedfile = result!.files.first;
         fileToDisplay = File(pickedfile!.path.toString());
@@ -88,31 +86,30 @@ class _HomePageState extends State<HomePage> {
         print("File name $_fileName");
       }
 
-
       setState(() {
         isLoadding = false;
       });
-    }catch (e) {
+    } catch (e) {
       print(e);
     }
   }
 
   //Tensor flow
   void sendImageToPython(File imageFile) async {
-  final url = Uri.parse('https://loginplant.firebaseapp.com/ia.py');
-  final request = http.MultipartRequest('POST', url);
-  final bytes = await imageFile.readAsBytes();
-  final multipartFile = http.MultipartFile.fromBytes('image', bytes,
-      filename: imageFile.path.split('/').last);
-  request.files.add(multipartFile);
-  final response = await request.send();
-  if (response.statusCode == 200) {
-    final responseString = await response.stream.bytesToString();
-    print(responseString);
-  } else {
-    // Handle error
+    final url = Uri.parse('https://loginplant.firebaseapp.com/ia.py');
+    final request = http.MultipartRequest('POST', url);
+    final bytes = await imageFile.readAsBytes();
+    final multipartFile = http.MultipartFile.fromBytes('image', bytes,
+        filename: imageFile.path.split('/').last);
+    request.files.add(multipartFile);
+    final response = await request.send();
+    if (response.statusCode == 200) {
+      final responseString = await response.stream.bytesToString();
+      print(responseString);
+    } else {
+      // Handle error
+    }
   }
-}
 
   @override
   Widget build(BuildContext context) {
@@ -141,14 +138,16 @@ class _HomePageState extends State<HomePage> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          SizedBox(height: 200,),
+                          SizedBox(
+                            height: 200,
+                          ),
                           SizedBox(
                             height: 80,
                             width: double.infinity,
                             child: ElevatedButton.icon(
                               onPressed: () {
                                 // TODO: Ajouter la fonctionalité d'ajout d'image
-                                pickCamera();
+                                pickImage();
                               },
                               icon: Icon(Icons.add),
                               label: Text('Upload your Image'),
@@ -170,8 +169,7 @@ class _HomePageState extends State<HomePage> {
                               child: ElevatedButton.icon(
                                 onPressed: () {
                                   // TODO: Ajouter la fonctionalité de prise de photo
-                                  pickFile();
-                                  
+                                  pickCamera();
                                 },
                                 icon: Icon(Icons.add),
                                 label: Text('Take a photo of your plant'),
@@ -184,40 +182,49 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ),
                             ),
-                            SizedBox(height: 20),
-                          
-                            SizedBox(
-                              height: 80,
-                              width: double.infinity,
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  // TODO: Ajouter la fonctionalité de prise de photo
-            
-                                  sendImageToPython(fileToDisplay!);
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  primary: Colors.blue,
-                                  elevation: 5,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                ), child: Text("Reconize",
-                                style: TextStyle(fontSize: 20,)),
+                          SizedBox(height: 20),
+                          SizedBox(
+                            height: 80,
+                            width: double.infinity,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                // TODO: Ajouter la fonctionalité de prise de photo
+
+                                sendImageToPython(image!);
+                              },
+                              style: ElevatedButton.styleFrom(
+                                primary: Colors.blue,
+                                elevation: 5,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
                               ),
+                              child: Text("Reconize",
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                  )),
                             ),
+                          ),
                         ],
                       ),
                     ),
-                    
-                    if(pickedfile !=null)
+
+                    /*if (pickedfile != null)
                       SizedBox(
                         height: 300,
                         width: 300,
-                        child: Image.file(fileToDisplay!),
-                        
-                        
-                      )else(Text("No Image Selected")),
-                      // image != null ? Image.file(image!): const Text("No Image selected"),
+                        child: Image.file(image!),
+                      )
+                    else
+                      (Text("No Image Selected")),*/
+                    Container(
+                      width: 200,
+                      height: 250,
+                      alignment: Alignment.center,
+                      child: image != null
+                          ? Image.file(image!)
+                          : const Text("No Image selected"),
+                    ),
                     Positioned(
                       bottom: 16,
                       left: 16,
