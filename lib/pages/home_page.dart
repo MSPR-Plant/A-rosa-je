@@ -1,11 +1,11 @@
 import 'dart:io';
-
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'profile_page.dart';
 import 'package:http/http.dart' as http;
 
 class HomePage extends StatefulWidget {
@@ -118,131 +118,153 @@ class _HomePageState extends State<HomePage> {
         padding: const EdgeInsets.symmetric(horizontal: 12.0),
         child: SafeArea(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Text(
-                  'Signed in as ' + user.email!,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  GestureDetector(
+                    child: IconButton(
+                      onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(
+                          builder: (context) {
+                            return ProfilePage();
+                          },
+                        ));
+                      },
+                      icon: Icon(Icons.account_circle),
+                    ),
                   ),
-                ),
+                  // Text(
+                  //   'Signed in as ' + user.email!,
+                  //   style: TextStyle(
+                  //     fontWeight: FontWeight.bold,
+                  //     fontSize: 20,
+                  //   ),
+                  // ),
+                  CircleAvatar(
+                    backgroundColor: Colors.red,
+                    child: IconButton(
+                      onPressed: () {
+                        FirebaseAuth.instance.signOut();
+                      },
+                      icon: Icon(Icons.exit_to_app),
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
               ),
               Expanded(
                 child: Stack(
                   children: [
-                    Align(
+                    Container(
                       alignment: Alignment.center,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            height: 200,
+                      child: image != null
+                          ? Image.file(
+                              image!,
+                              height: double.infinity,
+                              width: double.infinity,
+                              fit: BoxFit.cover,
+                            )
+                          : const Text("No Image selected"),
+                    ),
+                    if (image != null)
+                      Positioned(
+                        top: 0,
+                        right: 0,
+                        child: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              image = null;
+                            });
+                          },
+                          icon: Icon(
+                            Icons.close,
+                            color: Colors.red,
                           ),
-                          SizedBox(
-                            height: 80,
-                            width: double.infinity,
-                            child: ElevatedButton.icon(
-                              onPressed: () {
-                                // TODO: Ajouter la fonctionalité d'ajout d'image
-                                pickImage();
-                              },
-                              icon: Icon(Icons.add),
-                              label: Text('Upload your Image'),
-                              style: ElevatedButton.styleFrom(
-                                primary: Colors.green,
-                                elevation: 5,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 16.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                SizedBox(
+                                  height: 60,
+                                  width:
+                                      MediaQuery.of(context).size.width / 2.5,
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      // TODO: Ajouter la fonctionalité d'ajout d'image
+                                      pickImage();
+                                    },
+                                    child: Icon(
+                                      Icons.add_a_photo,
+                                      size: 30,
+                                    ),
+                                    style: ElevatedButton.styleFrom(
+                                      primary: Colors.green,
+                                      elevation: 5,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                              ),
+                                SizedBox(
+                                  height: 60,
+                                  width:
+                                      MediaQuery.of(context).size.width / 2.5,
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      // TODO: Ajouter la fonctionalité de prise de photo
+                                      pickCamera();
+                                    },
+                                    child: Icon(
+                                      Icons.camera_alt,
+                                      size: 30,
+                                    ),
+                                    style: ElevatedButton.styleFrom(
+                                      primary: Colors.green,
+                                      elevation: 5,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                          if (!kIsWeb) // TODO: Check if app is not running on web
                             SizedBox(height: 20),
-                          if (!kIsWeb)
                             SizedBox(
                               height: 80,
                               width: double.infinity,
-                              child: ElevatedButton.icon(
+                              child: ElevatedButton(
                                 onPressed: () {
                                   // TODO: Ajouter la fonctionalité de prise de photo
-                                  pickCamera();
+                                  sendImageToPython(image!);
                                 },
-                                icon: Icon(Icons.add),
-                                label: Text('Take a photo of your plant'),
                                 style: ElevatedButton.styleFrom(
-                                  primary: Colors.green,
+                                  primary: Colors.blue,
                                   elevation: 5,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                 ),
-                              ),
-                            ),
-                          SizedBox(height: 20),
-                          SizedBox(
-                            height: 80,
-                            width: double.infinity,
-                            child: ElevatedButton(
-                              onPressed: () {
-                                // TODO: Ajouter la fonctionalité de prise de photo
-
-                                sendImageToPython(image!);
-                              },
-                              style: ElevatedButton.styleFrom(
-                                primary: Colors.blue,
-                                elevation: 5,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                              ),
-                              child: Text("Reconize",
+                                child: Text(
+                                  "Recognize",
                                   style: TextStyle(
                                     fontSize: 20,
-                                  )),
+                                  ),
+                                ),
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-
-                    /*if (pickedfile != null)
-                      SizedBox(
-                        height: 300,
-                        width: 300,
-                        child: Image.file(image!),
-                      )
-                    else
-                      (Text("No Image Selected")),*/
-                    Container(
-                      width: 200,
-                      height: 250,
-                      alignment: Alignment.center,
-                      child: image != null
-                          ? Image.file(image!)
-                          : const Text("No Image selected"),
-                    ),
-                    Positioned(
-                      bottom: 16,
-                      left: 16,
-                      right: 16,
-                      child: SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            FirebaseAuth.instance.signOut();
-                          },
-                          child: Text('Sign out'),
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors.red,
-                            elevation: 5,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
+                          ],
                         ),
                       ),
                     ),
