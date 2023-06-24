@@ -106,6 +106,27 @@ class _HomePageState extends State<HomePage> {
     if (response.statusCode == 200) {
       final responseString = await response.stream.bytesToString();
       print(responseString);
+      if (responseString == 'flower') {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text("Flower Detected"),
+              content: Text("The flower name is XYZ."),
+            );
+          },
+        );
+      } else {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text("Error"),
+              content: Text("No flower detected."),
+            );
+          },
+        );
+      }
     } else {
       // Handle error
     }
@@ -132,16 +153,14 @@ class _HomePageState extends State<HomePage> {
                           },
                         ));
                       },
-                      icon: Icon(Icons.account_circle),
+                      icon: Icon(
+                        Icons.account_circle,
+                        color: Colors
+                            .lightGreen, // Change icon color to light green
+                        size: 30, // Increase icon size
+                      ),
                     ),
                   ),
-                  // Text(
-                  //   'Signed in as ' + user.email!,
-                  //   style: TextStyle(
-                  //     fontWeight: FontWeight.bold,
-                  //     fontSize: 20,
-                  //   ),
-                  // ),
                   CircleAvatar(
                     backgroundColor: Colors.red,
                     child: IconButton(
@@ -159,14 +178,16 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     Container(
                       alignment: Alignment.center,
+                      color: image != null ? null : Colors.grey[200],
                       child: image != null
                           ? Image.file(
                               image!,
-                              height: double.infinity,
-                              width: double.infinity,
                               fit: BoxFit.cover,
                             )
-                          : const Text("No Image selected"),
+                          : const Text(
+                              "No Image selected",
+                              style: TextStyle(color: Colors.grey),
+                            ),
                     ),
                     if (image != null)
                       Positioned(
@@ -194,60 +215,40 @@ class _HomePageState extends State<HomePage> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                SizedBox(
-                                  height: 60,
-                                  width:
-                                      MediaQuery.of(context).size.width / 2.5,
-                                  child: ElevatedButton(
-                                    onPressed: () {
-                                      // TODO: Ajouter la fonctionalité d'ajout d'image
-                                      pickImage();
-                                    },
-                                    child: Icon(
-                                      Icons.add_a_photo,
-                                      size: 30,
-                                    ),
-                                    style: ElevatedButton.styleFrom(
-                                      primary: Colors.green,
-                                      elevation: 5,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                    ),
+                                IconButton(
+                                  onPressed: () {
+                                    // TODO: Ajouter la fonctionalité d'ajout d'image
+                                    pickImage();
+                                  },
+                                  icon: Icon(
+                                    Icons.add_a_photo,
+                                    size: 30,
                                   ),
+                                  color: Colors.green,
                                 ),
-                                SizedBox(
-                                  height: 60,
-                                  width:
-                                      MediaQuery.of(context).size.width / 2.5,
-                                  child: ElevatedButton(
-                                    onPressed: () {
-                                      // TODO: Ajouter la fonctionalité de prise de photo
-                                      pickCamera();
-                                    },
-                                    child: Icon(
-                                      Icons.camera_alt,
-                                      size: 30,
-                                    ),
-                                    style: ElevatedButton.styleFrom(
-                                      primary: Colors.green,
-                                      elevation: 5,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                    ),
+                                IconButton(
+                                  onPressed: () {
+                                    // TODO: Ajouter la fonctionalité de prise de photo
+                                    pickCamera();
+                                  },
+                                  icon: Icon(
+                                    Icons.camera_alt,
+                                    size: 30,
                                   ),
+                                  color: Colors.green,
                                 ),
                               ],
                             ),
                             SizedBox(height: 20),
                             SizedBox(
-                              height: 80,
-                              width: double.infinity,
+                              height: 50,
+                              width: MediaQuery.of(context).size.width * 0.7,
                               child: ElevatedButton(
                                 onPressed: () {
                                   // TODO: Ajouter la fonctionalité de prise de photo
-                                  sendImageToPython(image!);
+                                  if (image != null) {
+                                    sendImageToPython(image!);
+                                  }
                                 },
                                 style: ElevatedButton.styleFrom(
                                   primary: Colors.blue,
